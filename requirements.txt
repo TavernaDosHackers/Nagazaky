@@ -1,0 +1,3 @@
+beautifulsoup4==4.9.1
+mechanize==0.4.5
+eel==0.12.4
