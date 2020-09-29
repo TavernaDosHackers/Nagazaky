@@ -23,6 +23,10 @@ You can download the latest tarball by clicking [here](https://github.com/Tavern
     $ cd nagazaky && pip3 install -r requirements.txt
 
 #### Authors:
-- [Matheus (blkz)](https://github.com/blkzy "Matheus (blkz)")
-- [Ygor Simões (CR3DN3)](https://github.com/CR3DN3 "Ygor Simões (CR3DN3)")
+- Matheus (blkz) [![GitHub](https://img.shields.io/badge/GitHub-blkz-inactive.svg?style=social&logo=github)](https://github.com/blkzy/)
+[![Instagram](https://img.shields.io/badge/Instagram-inactive.svg?style=social&logo=Instagram)](https://instagram.com/blkz.y)
+- Ygor Simões (CR3DN3) [![GitHub](https://img.shields.io/badge/GitHub-CR3DN3-inactive.svg?style=social&logo=github)](https://github.com/CR3DN3/)
+[![Facebook](https://img.shields.io/badge/Facebook-inactive.svg?style=social&logo=Facebook)](https://www.facebook.com/oldygor/)
+[![Twitter](https://img.shields.io/badge/Twitter-CR3DN3-inactive.svg?style=social&logo=twitter)](https://twitter.com/CR3DN3/)
+[![Instagram](https://img.shields.io/badge/Instagram-inactive.svg?style=social&logo=Instagram)](https://instagram.com/oldygor)
 
