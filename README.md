@@ -1,7 +1,14 @@
 # 🌸 Nagazaky &copy; [![License](https://img.shields.io/badge/License-MIT-critical.svg?style=flat-square)](https://github.com/TavernaDosHackers/Nagazaky/blob/master/LICENSE) [![Python3.8](https://img.shields.io/badge/Python-3.8-yellow.svg?style=flat-square&logo=python)](https://www.python.org/)
 
+<<<<<<< Updated upstream
   Nagazaky arose from a joke between friends on a call. We are kind of knowledgeable with some tools that we used, until we thought: "Why don't we create our own tool?". 
   We thought a lot about what the tool would work for ... and so we decided to do everything in one. A Mass Deface.
+=======
+**Version:** Alpha 1.0 (Development)
+
+Nagazaky arose from a joke between friends on a call. We are kind of knowledgeable with some tools that we used, until we thought: "Why don't we create our own tool?". 
+We thought a lot about what the tool would work for... and so we decided to do everything in one. A Mass Deface.
+>>>>>>> Stashed changes
 
 
 #### Required Tools
@@ -22,4 +29,8 @@ You can download the latest tarball by clicking [here](https://github.com/Tavern
 
 #### Authors:
 - [Matheus (blkz)](https://github.com/blkzy "Matheus (blkz)")
+<<<<<<< Updated upstream
 - [Ygor Simões (CR3DN3)](https://github.com/CR3DN3 "Ygor Simões (CR3DN3)")
+=======
+- [Ygor Simões (CR3DN3)](https://github.com/CR3DN3 "Ygor Simões (CR3DN3)")
+>>>>>>> Stashed changes
