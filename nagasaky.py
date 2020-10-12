@@ -1,13 +1,12 @@
 import argparse
 
 from src.utils.whatisacms import WhatIsACMS
-
-
 from src.browser import engine
 from src.core.settings import settings
 
 print(settings.banner)
-parser = argparse.ArgumentParser(usage="python3 proSearch.py", description="ProSearch é uma ferramenta de busca por dork's.\nCriador: https://github.com/blkzy")
+
+parser = argparse.ArgumentParser(usage="python3 nagasaky.py", description="Nagasaky é uma ferramenta de busca por dork's e auto exploração.\nCriadores: https://github.com/blkzy | https://github.com/CR3DN3")
 
 parser.add_argument("-d", "--dork", 
                           type=str, 
@@ -37,7 +36,6 @@ parser.add_argument("--cms",
  
 args = parser.parse_args()
 browser = engine()
-
 
 print(args.cms)
 
