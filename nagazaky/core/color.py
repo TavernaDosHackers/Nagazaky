@@ -19,14 +19,14 @@ class Color:
 
     # Helper string replacements
     replacements = {
-        "{+}": " {W}{D}[{W}{G}+{W}{D}]{W}",
-        "{-}": " {W}{D}[{W}{GR}-{W}{D}]{W}",
-        "{!}": " {O}[{R}!{O}]{W}",
-        "{?}": " {W}[{C}?{W}]"
+        "{+}": "{W}{D}[{W}{G}+{W}{D}]{W}",
+        "{-}": "{W}{D}[{W}{GR}-{W}{D}]{W}",
+        "{!}": "{O}[{R}!{O}]{W}",
+        "{?}": "{W}[{C}?{W}]"
     }
 
     @staticmethod
-    def return_message(message):
+    def return_message(message: str) -> str:
         """ Returns colored string """
         output = message
         for (key, value) in Color.replacements.items():
@@ -36,7 +36,7 @@ class Color:
         return output
 
     @staticmethod
-    def print(message):
+    def print(message: str) -> None:
         """
         Prints text using colored format on same line.
         Example:
@@ -47,12 +47,12 @@ class Color:
         sys.stdout.flush()
 
     @staticmethod
-    def println(message):
+    def println(message: str) -> None:
         """Prints text using colored format with trailing new line."""
         Color.print("%s\n" % message)
 
     @staticmethod
-    def exception(message, ex):
+    def exception(message: str, ex: Exception or str) -> None:
         """ Prints message exception """
         Color.println(Color.return_message("{!} {R}%s{W}: " % message) + str(ex))
 

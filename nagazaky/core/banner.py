@@ -9,10 +9,10 @@ class Banner(Settings):
         """ Constructor and Attributes. """
         super().__init__()
 
-    def print_logo(self):
+    def print_logo(self) -> None:
         """ Print the banner without specifications. """
         Color.println("""
-———————————————————————————————————————————————————————————————————————————
+——————————————————————————————————————————————————————————————————————————————
 {PK}
     ███╗   ██╗ █████╗  ██████╗  █████╗ ███████╗ █████╗ ██╗  ██╗██╗   ██╗
     ████╗  ██║██╔══██╗██╔════╝ ██╔══██╗╚══███╔╝██╔══██╗██║ ██╔╝╚██╗ ██╔╝
@@ -25,10 +25,10 @@ class Banner(Settings):
                               Version: {self.get_version}
                  GitHub: {self.get_github}
 
-———————————————————————————————————————————————————————————————————————————""")
+——————————————————————————————————————————————————————————————————————————————""")
 
     @staticmethod
-    def print_helper():
+    def print_helper() -> None:
         """ Print the banner helper """
         print("""
 Usage: python3 nagazaky.py [options]
@@ -37,10 +37,13 @@ Arguments:
 
    -h, --help             Show this help message and exit
    -u URL, --url URL      Target URL (http://www.site_target.com/)
+   --user-agent           Customize the User-Agent. Default: Random User-Agent
 
-   --no-update
+   --no-update            Disable the initial update
    --no-logo              Disable the initial banner\n""")
 
 
 if __name__ == "__main__":
-    pass
+    banner = Banner()
+    banner.print_logo()
+    banner.print_helper()

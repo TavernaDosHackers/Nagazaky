@@ -18,4 +18,6 @@ class Update(Settings):
 
 
 if __name__ == "__main__":
-    pass
+    update = Update()
+    update.verify()
+    update.upgrade()
