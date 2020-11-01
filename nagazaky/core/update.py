@@ -26,6 +26,7 @@ SOFTWARE.
 
 import sys
 import os
+import subprocess
 from requests import get
 
 from nagazaky.core.settings import Settings
@@ -37,7 +38,7 @@ class Update(Settings):
         """ Constructor and Attributes. """
         super().__init__()
 
-    def verify(self) -> None:
+    def verify(self, arg_update: bool) -> bool:
         """ Checks for updates to update versions. """
         # Make a request for the repository version.
         req_repository = get(self.get_repository).json()
@@ -45,26 +46,31 @@ class Update(Settings):
 
         # Checks whether the repository version is different from the current version.
         if repository_version != self.get_version:
-            Color.println("{+} New version available: {G}%s{W}" % repository_version)
+            Color.println("\n{+} New version available: {G}%s{W}" % repository_version)
+            return True
+        else:
+            if arg_update:
+                Color.println("\n{+} Congratulations, you are already using the latest version available.")
+                sys.exit()
 
     def upgrade(self) -> None:
         """ Updates Nagazaky to the most current version available. """
         # Checks for the .git directory
-        if not os.path.exists("../../.git"):
+        if not os.path.exists(os.path.realpath(".git")):
             Color.println("{!} Not a git repository.")
             Color.println("{+} It is recommended to clone the 'TavernaDosHackers/Nagazaky' repository from GitHub ("
                           "'git clone %sNagazaky')" % self.get_github)
             sys.exit()
 
         # Try to update Nagazaky
+        output = ""
         try:
             Color.println("{+} Updating...")
-            os.system(f"git pull {self.get_github}Nagazaky")
+            process = subprocess.Popen(f"git pull {self.get_github}Nagazaky", shell=True, stdout=subprocess.PIPE,
+                                       stderr=subprocess.STDOUT)
+            output = process.communicate()
             Color.println("{+} Nagazaky was successfully updated.")
+            Color.println("{+} Check the new release notes at: {"
+                          "G}https://github.com/TavernaDosHackers/Nagazaky/commits/master{W}")
         except Exception as e:
             Color.exception("Could not update.", e)
-
-
-if __name__ == "__main__":
-    update = Update()
-    update.upgrade()

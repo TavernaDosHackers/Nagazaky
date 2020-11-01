@@ -47,16 +47,17 @@ class Nagazaky:
 
     def run(self) -> None:
         """ Method that starts Nagazaky. """
+
         if self.args.no_banner is False:
             self.banner.print_logo()
 
-        if self.args.url is None:
-            self.banner.print_helper()
+        update_verify = self.update.verify(self.args.update)
+        if self.args.update and update_verify:
+            self.update.upgrade()
             sys.exit()
 
-        self.update.verify()
-        if self.args.update is True:
-            self.update.upgrade()
+        if self.args.url is None:
+            self.banner.print_helper()
             sys.exit()
 
 

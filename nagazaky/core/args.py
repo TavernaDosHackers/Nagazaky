@@ -52,7 +52,7 @@ class Arguments(Settings):
 
         parser.add_argument("--update",
                             action="store_true",
-                            default=self.automatic_upgrades,
+                            default=False,
                             help="Update Nagazaky to the latest version available")
 
         parser.add_argument("--no-banner",

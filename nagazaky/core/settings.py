@@ -45,7 +45,7 @@ class Settings(ABC):
 
         # Update and Upgrade
         self.__api_repository = self.__config_json["update"]["api_repository"]
-        self.__automatic_upgrades = self.__config_json["update"]["automatic_upgrades"]
+        self.__automatic_upgrades = bool(self.__config_json["update"]["automatic_upgrades"])
 
     # Getters
     # Specifications
@@ -71,7 +71,7 @@ class Settings(ABC):
         return self.__api_repository
 
     @property
-    def automatic_upgrades(self) -> bool:
+    def get_automatic_upgrades(self) -> bool:
         return self.__automatic_upgrades
 
 
