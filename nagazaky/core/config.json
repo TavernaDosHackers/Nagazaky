@@ -1,0 +1,12 @@
+{
+  "specifications": {
+    "author": "Matheus (@blkz), Ygor Simões (@CR3DN3)",
+    "version": "2.0-alpha",
+    "github": "https://github.com/TavernaDosHackers/",
+    "email": "contato@tavernadoshackers.com.br"
+  },
+  "update": {
+    "repository": "https://raw.githubusercontent.com/TavernaDosHackers/Nagazaky/master/nagazaky/core/config.json",
+    "automatic_upgrades": "True"
+  }
+}
