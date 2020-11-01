@@ -24,8 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from nagazaky.core.settings import Settings
+import sys
+import os
 from requests import get
+
+from nagazaky.core.settings import Settings
+from nagazaky.core.color import Color
 
 
 class Update(Settings):
@@ -35,13 +39,32 @@ class Update(Settings):
 
     def verify(self) -> None:
         """ Checks for updates to update versions. """
-        pass
+        # Make a request for the repository version.
+        req_repository = get(self.get_repository).json()
+        repository_version = req_repository["specifications"]["version"]
+
+        # Checks whether the repository version is different from the current version.
+        if repository_version != self.get_version:
+            Color.println("{+} New version available: {G}%s{W}" % repository_version)
 
     def upgrade(self) -> None:
         """ Updates Nagazaky to the most current version available. """
-        pass
+        # Checks for the .git directory
+        if not os.path.exists("../../.git"):
+            Color.println("{!} Not a git repository.")
+            Color.println("{+} It is recommended to clone the 'TavernaDosHackers/Nagazaky' repository from GitHub ("
+                          "'git clone %sNagazaky')" % self.get_github)
+            sys.exit()
+
+        # Try to update Nagazaky
+        try:
+            Color.println("{+} Updating...")
+            os.system(f"git pull {self.get_github}Nagazaky")
+            Color.println("{+} Nagazaky was successfully updated.")
+        except Exception as e:
+            Color.exception("Could not update.", e)
 
 
 if __name__ == "__main__":
     update = Update()
-    update.verify()
+    update.upgrade()

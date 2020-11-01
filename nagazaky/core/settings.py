@@ -43,7 +43,7 @@ class Settings(ABC):
         self.__email = self.__config["specifications"]["email"]
 
         # Update and Upgrade
-        self.__repository = self.__config["update"]["repository"]
+        self.__api_repository = self.__config["update"]["api_repository"]
         self.__automatic_upgrades = self.__config["update"]["automatic_upgrades"]
 
     # Getters
@@ -67,7 +67,7 @@ class Settings(ABC):
     # Update and Upgrade
     @property
     def get_repository(self) -> str:
-        return self.__repository
+        return self.__api_repository
 
     @property
     def automatic_upgrades(self) -> bool:

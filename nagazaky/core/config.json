@@ -6,7 +6,7 @@
     "email": "contato@tavernadoshackers.com.br"
   },
   "update": {
-    "repository": "https://raw.githubusercontent.com/TavernaDosHackers/Nagazaky/master/nagazaky/core/config.json",
+    "api_repository": "https://raw.githubusercontent.com/TavernaDosHackers/Nagazaky/master/nagazaky/core/config.json",
     "automatic_upgrades": "True"
   }
 }
