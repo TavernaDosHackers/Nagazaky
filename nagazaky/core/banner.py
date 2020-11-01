@@ -57,13 +57,15 @@ class Banner(Settings):
         print("""
 Usage: python3 nagazaky.py [options]
 
+Description: The unlikely Mass Deface!
+             "We don't know what it is and what it will be ... we just know it's cool."
+
 Arguments:
 
    -h, --help             Show this help message and exit
    -u URL, --url URL      Target URL (http://www.site_target.com/)
    --user-agent           Customize the User-Agent. Default: Random User-Agent
-
-   --no-update            Disable the initial update
+   --update               Updates Nagazaky to the latest version
    --no-logo              Disable the initial banner\n""")
 
 

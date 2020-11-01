@@ -66,8 +66,8 @@ class Update(Settings):
         output = ""
         try:
             Color.println("{+} Updating...")
-            process = subprocess.Popen(f"git pull {self.get_github}Nagazaky", shell=True, stdout=subprocess.PIPE,
-                                       stderr=subprocess.STDOUT)
+            process = subprocess.Popen(f"git checkout . && git pull {self.get_github}Nagazaky", shell=True,
+                                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             output = process.communicate()
             Color.println("{+} Nagazaky was successfully updated.")
             Color.println("{+} Check the new release notes at: {"

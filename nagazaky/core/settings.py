@@ -26,7 +26,10 @@ SOFTWARE.
 
 import json
 import os
+from requests import get
 from abc import ABC
+
+from nagazaky.core.color import Color
 
 
 class Settings(ABC):
@@ -46,6 +49,51 @@ class Settings(ABC):
         # Update and Upgrade
         self.__api_repository = self.__config_json["update"]["api_repository"]
         self.__automatic_upgrades = bool(self.__config_json["update"]["automatic_upgrades"])
+
+    @staticmethod
+    def get_user_agent(user_agent):
+        pass
+
+    @staticmethod
+    def get_proxy(proxy: str or None) -> dict:
+        """ Generate an automatic proxy through an API or format a pre-set proxy. """
+
+        # Make a request in the proxy API and format accordingly.
+        if proxy is None:
+            while True:
+                request_api_proxy = get("https://www.proxyscan.io/api/proxy?format=json&level=elite,"
+                                        "anonymous&type=https,http&ping=100").json()
+                status_proxy = request_api_proxy[0]["Location"]["status"]
+
+                if status_proxy != "error" and status_proxy != "fail" and status_proxy != "None":
+                    break
+
+            protocol = request_api_proxy[0]["Type"][0].lower()
+            port = request_api_proxy[0]["Port"]
+            ip = request_api_proxy[0]["Ip"] + ":" + str(port)
+            proxy = {protocol: ip}
+
+        # Formats the selected proxy accordingly.
+        else:
+            if proxy[:4] == "http":
+                protocol = "http"
+                proxy = {protocol: proxy}
+            elif proxy[:5] == "https":
+                protocol = "https"
+                proxy = {protocol: proxy}
+            elif proxy[:3] == "ftp":
+                protocol = "ftp"
+                proxy = {protocol: proxy}
+            else:
+                proxy = ""
+
+        # Prints the selected proxy on the screen.
+        for key, value in proxy.items():
+            key_value = key + "://" + value
+            Color.println("{+} Proxy: %s" % key_value)
+
+        # Returns the selected proxy in the dictionary.
+        return proxy
 
     # Getters
     # Specifications
@@ -76,7 +124,4 @@ class Settings(ABC):
 
 
 if __name__ == "__main__":
-    config = open(os.path.realpath("../core/config.json"), "r")
-    config = str(config.read())
-    config = json.loads(config)
-    print(config)
+    pass
