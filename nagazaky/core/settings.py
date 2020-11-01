@@ -24,27 +24,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from abc import ABC
 import json
+import os
+from abc import ABC
 
 
 class Settings(ABC):
     def __init__(self):
         """ Constructor and Attributes. """
         # Load archive config.json
-        self.__config = open("config.json", "r")
-        self.__config = str(self.__config.read())
-        self.__config = json.loads(self.__config)
+        self.__config_json = open(os.path.realpath("nagazaky/core/config.json"), "r")
+        self.__config_json = str(self.__config_json.read())
+        self.__config_json = json.loads(self.__config_json)
 
         # Specifications
-        self.__authors = self.__config["specifications"]["author"]
-        self.__version = self.__config["specifications"]["version"]
-        self.__github = self.__config["specifications"]["github"]
-        self.__email = self.__config["specifications"]["email"]
+        self.__authors = self.__config_json["specifications"]["author"]
+        self.__version = self.__config_json["specifications"]["version"]
+        self.__github = self.__config_json["specifications"]["github"]
+        self.__email = self.__config_json["specifications"]["email"]
 
         # Update and Upgrade
-        self.__api_repository = self.__config["update"]["api_repository"]
-        self.__automatic_upgrades = self.__config["update"]["automatic_upgrades"]
+        self.__api_repository = self.__config_json["update"]["api_repository"]
+        self.__automatic_upgrades = self.__config_json["update"]["automatic_upgrades"]
 
     # Getters
     # Specifications
@@ -75,4 +76,7 @@ class Settings(ABC):
 
 
 if __name__ == "__main__":
-    pass
+    config = open(os.path.realpath("../core/config.json"), "r")
+    config = str(config.read())
+    config = json.loads(config)
+    print(config)

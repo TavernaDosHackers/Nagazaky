@@ -33,9 +33,9 @@ try:
     import sys
     from requests import get
 except (ValueError, ImportError) as e:
-    Color.exception("Error", e)
+    Color.exception("Import Error", e)
 except Exception as e:
-    Color.exception("Unknown exception error", e)
+    Color.exception("Error", e)
 
 
 class Nagazaky:
@@ -67,7 +67,7 @@ def entry_point() -> None:
     except KeyboardInterrupt as ex:
         Color.exception("KeyboardInterrupt", ex)
     except Exception as ex:
-        Color.exception("Unknown exception error", ex)
+        Color.exception("Error", ex)
 
 
 if __name__ == "__main__":

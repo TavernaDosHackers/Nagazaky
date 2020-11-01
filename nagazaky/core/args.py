@@ -47,7 +47,7 @@ class Arguments(Settings):
         parser.add_argument("--user-agent",
                             action="store",
                             type=str,
-                            default=self.get_user_agent(),
+                            default="",
                             help="Customize the User-Agent. Default: Random User-Agent")
 
         parser.add_argument("--update",
