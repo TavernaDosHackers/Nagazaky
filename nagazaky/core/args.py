@@ -47,8 +47,14 @@ class Arguments(Settings):
         parser.add_argument("--user-agent",
                             action="store",
                             type=str,
-                            default="",
+                            default=None,
                             help="Customize the User-Agent. Default: Random User-Agent")
+
+        parser.add_argument("--proxy",
+                            action="store",
+                            type=str,
+                            default=None,
+                            help="Use a proxy to connect to the target URL")
 
         parser.add_argument("--update",
                             action="store_true",

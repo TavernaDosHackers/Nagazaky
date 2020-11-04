@@ -26,8 +26,10 @@ SOFTWARE.
 
 try:
     from nagazaky.core.color import Color
+    from nagazaky.core.settings import Settings
     from nagazaky.core.banner import Banner
     from nagazaky.core.update import Update
+    from nagazaky.core.request import Request
     from nagazaky.core.args import Arguments
 
     import sys
@@ -42,8 +44,10 @@ class Nagazaky:
     def __init__(self):
         """ Constructor and Attributes. """
         self.args = Arguments().args
+        self.request = Request(Settings.get_user_agent(self.args.user_agent),
+                               Settings.get_proxy(self.args.proxy))
         self.banner = Banner()
-        self.update = Update()
+        self.update = Update(self.request)
 
     def run(self) -> None:
         """ Method that starts Nagazaky. """
@@ -67,8 +71,6 @@ def entry_point() -> None:
         nagazaky.run()
     except KeyboardInterrupt as ex:
         Color.exception("KeyboardInterrupt", ex)
-    except Exception as ex:
-        Color.exception("Error", ex)
 
 
 if __name__ == "__main__":

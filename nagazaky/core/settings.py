@@ -26,8 +26,11 @@ SOFTWARE.
 
 import json
 import os
-from requests import get
+import pathlib
+import random
+
 from abc import ABC
+from requests import get
 
 from nagazaky.core.color import Color
 
@@ -35,10 +38,13 @@ from nagazaky.core.color import Color
 class Settings(ABC):
     def __init__(self):
         """ Constructor and Attributes. """
+
         # Load archive config.json
-        self.__config_json = open(os.path.realpath("nagazaky/core/config.json"), "r")
-        self.__config_json = str(self.__config_json.read())
-        self.__config_json = json.loads(self.__config_json)
+        path_dir = pathlib.Path("../../")
+        dir_config_json = path_dir.glob("**/config.json")
+        for dir_file in dir_config_json:
+            with open(os.path.realpath(dir_file)) as file_config_json:
+                self.__config_json = json.load(file_config_json)
 
         # Specifications
         self.__authors = self.__config_json["specifications"]["author"]
@@ -51,15 +57,35 @@ class Settings(ABC):
         self.__automatic_upgrades = bool(self.__config_json["update"]["automatic_upgrades"])
 
     @staticmethod
-    def get_user_agent(user_agent):
-        pass
+    def get_user_agent(user_agent: str or None) -> dict:
+        """ Generate an automatic User-Agent or format a predefined agent. """
+
+        if user_agent is None:
+            # Generate an automatic User-Agent
+            repo_url_agents = "https://raw.githubusercontent.com/TavernaDosHackers/Nagazaky/master/extras/user-agents/"
+            agents_chrome = get(repo_url_agents + "chrome.txt").text
+            agents_edge = get(repo_url_agents + "edge.txt").text
+            agents_firefox = get(repo_url_agents + "firefox.txt").text
+            agents_opera = get(repo_url_agents + "opera.txt").text
+            agents_safari = get(repo_url_agents + "safari.txt").text
+
+            agents = agents_chrome + agents_edge + agents_firefox + agents_opera + agents_safari
+            random_agent = random.choice(agents.splitlines())
+            user_agent = {"User-Agent": random_agent}
+
+        else:
+            # Format a predefined agent.
+            user_agent = {"User-Agent": user_agent}
+
+        # Returns the random User-Agent.
+        return user_agent
 
     @staticmethod
     def get_proxy(proxy: str or None) -> dict:
         """ Generate an automatic proxy through an API or format a pre-set proxy. """
 
         # Make a request in the proxy API and format accordingly.
-        if proxy is None:
+        if proxy == "auto":
             while True:
                 request_api_proxy = get("https://www.proxyscan.io/api/proxy?format=json&level=elite,"
                                         "anonymous&type=https,http&ping=100").json()
@@ -74,7 +100,7 @@ class Settings(ABC):
             proxy = {protocol: ip}
 
         # Formats the selected proxy accordingly.
-        else:
+        elif proxy != "auto" and proxy is not None:
             if proxy[:4] == "http":
                 protocol = "http"
                 proxy = {protocol: proxy}
@@ -84,13 +110,14 @@ class Settings(ABC):
             elif proxy[:3] == "ftp":
                 protocol = "ftp"
                 proxy = {protocol: proxy}
-            else:
-                proxy = ""
 
-        # Prints the selected proxy on the screen.
-        for key, value in proxy.items():
-            key_value = key + "://" + value
-            Color.println("{+} Proxy: %s" % key_value)
+        if proxy is None:
+            proxy = ""
+        else:
+            # Prints the selected proxy on the screen.
+            for key, value in proxy.items():
+                key_value = key + "://" + str(value)
+                Color.println("{+} Proxy: %s" % key_value)
 
         # Returns the selected proxy in the dictionary.
         return proxy

@@ -62,11 +62,12 @@ Description: The unlikely Mass Deface!
 
 Arguments:
 
-   -h, --help             Show this help message and exit
-   -u URL, --url URL      Target URL (http://www.site_target.com/)
-   --user-agent           Customize the User-Agent. Default: Random User-Agent
-   --update               Updates Nagazaky to the latest version
-   --no-logo              Disable the initial banner\n""")
+   -h, --help                Show this help message and exit
+   -u URL, --url URL         Target URL (http://www.site_target.com/)
+   --user-agent              Customize the User-Agent. Default: Random User-Agent
+   --proxy <auto, custom>    Use a proxy to connect to the target URL
+   --update                  Updates Nagazaky to the latest version
+   --no-logo                 Disable the initial banner\n""")
 
 
 if __name__ == "__main__":

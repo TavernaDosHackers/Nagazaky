@@ -27,21 +27,22 @@ SOFTWARE.
 import sys
 import os
 import subprocess
-from requests import get
 
 from nagazaky.core.settings import Settings
+from nagazaky.core.request import Request
 from nagazaky.core.color import Color
 
 
 class Update(Settings):
-    def __init__(self):
+    def __init__(self, request: Request):
         """ Constructor and Attributes. """
         super().__init__()
+        self.request = request
 
     def verify(self, arg_update: bool) -> bool:
         """ Checks for updates to update versions. """
         # Make a request for the repository version.
-        req_repository = get(self.get_repository).json()
+        req_repository = self.request.get_json(self.get_repository)
         repository_version = req_repository["specifications"]["version"]
 
         # Checks whether the repository version is different from the current version.
