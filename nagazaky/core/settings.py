@@ -81,7 +81,7 @@ class Settings(ABC):
         return user_agent
 
     @staticmethod
-    def get_proxy(proxy: str or None) -> dict:
+    def get_proxy(proxy: str or None) -> dict or None:
         """ Generate an automatic proxy through an API or format a pre-set proxy. """
 
         # Make a request in the proxy API and format accordingly.
@@ -113,8 +113,9 @@ class Settings(ABC):
 
         if proxy is None:
             proxy = ""
+
+        # Prints the selected proxy on the screen.
         else:
-            # Prints the selected proxy on the screen.
             for key, value in proxy.items():
                 key_value = key + "://" + str(value)
                 Color.println("{+} Proxy: %s" % key_value)
@@ -151,4 +152,5 @@ class Settings(ABC):
 
 
 if __name__ == "__main__":
-    pass
+    print(Settings.get_proxy("auto"))
+    print(Settings.get_user_agent(None))

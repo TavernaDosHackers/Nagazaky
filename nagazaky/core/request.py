@@ -31,11 +31,12 @@ from requests import get
 
 class Request(Settings):
     """ This class defines methods used to perform HTTP requests"""
+
     def __init__(self, user_agent: dict, proxy: dict):
         """ Constructor and Attributes. """
         super().__init__()
-        self.user_agent = self.get_user_agent(user_agent)
-        self.proxy = self.get_proxy(proxy)
+        self.user_agent = user_agent
+        self.proxy = proxy
 
     def get_text(self, url: str) -> str:
         """ Method that makes a request and returns the scope of HTML """
@@ -51,3 +52,7 @@ class Request(Settings):
         """ Method that makes a request and returns the status """
         req = get(url, headers=self.user_agent, proxies=self.proxy)
         return req.status_code
+
+
+if __name__ == "__main__":
+    pass
