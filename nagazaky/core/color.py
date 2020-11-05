@@ -44,7 +44,7 @@ class Color:
 
     # Helper string replacements
     replacements = {
-        "{+}": "{W}{D}[{W}{G}+{W}{D}]{W}",
+        "{+}": "{W}{D}[{W}{P}+{W}{D}]{W}",
         "{-}": "{W}{D}[{W}{GR}-{W}{D}]{W}",
         "{!}": "{O}[{R}!{O}]{W}",
         "{?}": "{W}[{C}?{W}]"

@@ -24,8 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from nagazaky.core.settings import Settings
 import argparse
+from nagazaky.core.settings import Settings
 
 
 class Arguments(Settings):

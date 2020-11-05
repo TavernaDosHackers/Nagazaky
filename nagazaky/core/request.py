@@ -24,9 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+from requests import get, Response
 from nagazaky.core.settings import Settings
-
-from requests import get
 
 
 class Request(Settings):
@@ -38,20 +37,10 @@ class Request(Settings):
         self.user_agent = user_agent
         self.proxy = proxy
 
-    def get_text(self, url: str) -> str:
+    def get(self, url: str) -> Response:
         """ Method that makes a request and returns the scope of HTML """
-        req = get(url, headers=self.user_agent, proxies=self.proxy)
-        return req.text
-
-    def get_json(self, url: str) -> dict:
-        """ Method that makes a request and returns a JSON """
-        req = get(url, headers=self.user_agent, proxies=self.proxy)
-        return req.json()
-
-    def get_status_code(self, url: str) -> int:
-        """ Method that makes a request and returns the status """
-        req = get(url, headers=self.user_agent, proxies=self.proxy)
-        return req.status_code
+        request = get(url, headers=self.user_agent, proxies=self.proxy)
+        return request
 
 
 if __name__ == "__main__":

@@ -32,8 +32,6 @@ import random
 from abc import ABC
 from requests import get
 
-from nagazaky.core.color import Color
-
 
 class Settings(ABC):
     def __init__(self):
@@ -55,6 +53,26 @@ class Settings(ABC):
         # Update and Upgrade
         self.__api_repository = self.__config_json["update"]["api_repository"]
         self.__automatic_upgrades = bool(self.__config_json["update"]["automatic_upgrades"])
+
+    @staticmethod
+    def target(url):
+        """ Format the target URL accordingly. """
+        if url[:7] != "http://" and url[:8] != "https://":
+            url = "http://" + url
+        if url[-1] != "/":
+            url = url + "/"
+        return url
+
+    @staticmethod
+    def target_simple(url):
+        """ Format the target URL as simple. """
+        if url[:7] == "http://":
+            url = url.replace("http://", "")
+        elif url[:8] == "https://":
+            url = url.replace("https://", "")
+        if url[-1] == "/":
+            url = url.replace("/", "")
+        return url
 
     @staticmethod
     def get_user_agent(user_agent: str or None) -> dict:
@@ -113,12 +131,6 @@ class Settings(ABC):
 
         if proxy is None:
             proxy = ""
-
-        # Prints the selected proxy on the screen.
-        else:
-            for key, value in proxy.items():
-                key_value = key + "://" + str(value)
-                Color.println("{+} Proxy: %s" % key_value)
 
         # Returns the selected proxy in the dictionary.
         return proxy

@@ -42,7 +42,7 @@ class Update(Settings):
     def verify(self, arg_update: bool) -> bool:
         """ Checks for updates to update versions. """
         # Make a request for the repository version.
-        req_repository = self.request.get_json(self.get_repository)
+        req_repository = self.request.get(self.get_repository).json()
         repository_version = req_repository["specifications"]["version"]
 
         # Checks whether the repository version is different from the current version.

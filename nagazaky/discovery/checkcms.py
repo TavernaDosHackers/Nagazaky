@@ -24,21 +24,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-# ATTENTION! We recommend installing the script before you even run this script.
-# Read carefully the steps to install: https://github.com/TavernaDosHackers/Nagazaky/blob/master/README.md
-
 from nagazaky.core.color import Color
-from nagazaky import __main__
+from nagazaky.core.settings import Settings
+from nagazaky.core.request import Request
 
-from platform import python_version
-import sys
 
-if __name__ == "__main__":
-    # Verify python version
-    if python_version()[0:3] < "3.8":
-        Color.println("{!} Make sure you have Python 3.7+ installed, quitting.\n")
-        sys.exit()
+class CheckCMS(Settings):
+    def __init__(self, url: str, request: Request):
+        """ Constructor and Attributes. """
+        super().__init__()
+        self.url = url
+        self.request = request
 
-    # Start Nagazaky
-    __main__.entry_point()
+        self.su_request = self.request.get(self.url)
+
+    def wordpress(self) -> bool:
+        if "wp-content" in self.su_request.text:
+            Color.println(" │  ├ WordPress: {G}running{W} (/wp-content/)")
+            return True
+
+    def joomla(self) -> bool:
+        if "com_content" in self.su_request.text:
+            Color.println(" │  ├ Joomla: {G}running{W} (/com_content/)")
+            return True
+
+    def drupal(self) -> bool:
+        if "/sites/default/files/" in self.su_request.text:
+            Color.println(" │  ├ Drupal: {G}running{W} (/sites/default/files/)")
+            return True
