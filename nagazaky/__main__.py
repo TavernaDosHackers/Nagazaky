@@ -119,8 +119,17 @@ class Nagazaky:
 
         # Check CMS.
         Color.println(" ├─{+} CMS:")
-        if self.check_cms.wordpress() or self.check_cms.joomla() or self.check_cms.drupal():
-            pass
+
+        check_cms_wordpress = self.check_cms.wordpress()
+        check_cms_joomla = self.check_cms.joomla()
+        check_cms_drupal = self.check_cms.drupal()
+
+        if check_cms_wordpress:
+            Color.println(" │  ├ WordPress: {G}running{W} (/wp-content/)")
+        elif check_cms_joomla:
+            Color.println(" │  ├ Joomla: {G}running{W} (/com_content/)")
+        elif check_cms_drupal:
+            Color.println(" │  ├ Drupal: {G}running{W} (/sites/default/files/)")
         else:
             Color.println(" │  │ 'No valid CMS was found.'")
 

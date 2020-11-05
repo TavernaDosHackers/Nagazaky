@@ -23,28 +23,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-
-from nagazaky.core.settings import Settings
-from nagazaky.core.request import Request
-
-
-class CheckCMS(Settings):
-    def __init__(self, url: str, request: Request):
-        """ Constructor and Attributes. """
-        super().__init__()
-        self.url = url
-        self.request = request
-
-        self.su_request = self.request.get(self.url)
-
-    def wordpress(self) -> bool:
-        if "wp-content" in self.su_request.text:
-            return True
-
-    def joomla(self) -> bool:
-        if "com_content" in self.su_request.text:
-            return True
-
-    def drupal(self) -> bool:
-        if "/sites/default/files/" in self.su_request.text:
-            return True
