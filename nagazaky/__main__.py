@@ -51,7 +51,7 @@ class Nagazaky:
         """ Constructor and Attributes. """
 
         # Core
-        # Configure Arguments..
+        # Configure Arguments.
         self.args = Arguments().args
         self.args.url = Settings.target(self.args.url)
         self.args.user_agent = Settings.get_user_agent(self.args.user_agent)
@@ -80,12 +80,13 @@ class Nagazaky:
         if self.args.no_banner is False:
             self.banner.print_logo()
 
-        # Check updates.
+        # Check --update.
         update_verify = self.update.verify(self.args.update)
         if self.args.update and update_verify:
             self.update.upgrade()
             sys.exit()
 
+        # Check --url.
         # Print help message.
         if self.args.url is None:
             self.banner.print_helper()
