@@ -38,8 +38,8 @@ class Settings(ABC):
         """ Constructor and Attributes. """
 
         # Load archive config.json
-        path_dir = pathlib.Path("../../")
-        dir_config_json = path_dir.glob("**/config.json")
+        self.path_dir = pathlib.Path("../../")
+        dir_config_json = self.path_dir.glob("**/config.json")
         for dir_file in dir_config_json:
             with open(os.path.realpath(dir_file)) as file_config_json:
                 self.__config_json = json.load(file_config_json)
@@ -88,8 +88,8 @@ class Settings(ABC):
             agents_safari = get(repo_url_agents + "safari.txt").text
 
             agents = agents_chrome + agents_edge + agents_firefox + agents_opera + agents_safari
-            random_agent = random.choice(agents.splitlines())
-            user_agent = {"User-Agent": random_agent}
+            user_agent = random.choice(agents.splitlines())
+            user_agent = {"User-Agent": user_agent}
 
         else:
             # Format a predefined agent.
@@ -115,7 +115,7 @@ class Settings(ABC):
             protocol = request_api_proxy[0]["Type"][0].lower()
             port = request_api_proxy[0]["Port"]
             ip = request_api_proxy[0]["Ip"] + ":" + str(port)
-            proxy = {protocol: ip}
+            proxy = {protocol: protocol + "://" + ip}
 
         # Formats the selected proxy accordingly.
         elif proxy != "auto" and proxy is not None:
@@ -127,7 +127,7 @@ class Settings(ABC):
                 proxy = {protocol: proxy}
             elif proxy[:3] == "ftp":
                 protocol = "ftp"
-                proxy = {protocol: proxy}
+                proxy = {protocol: protocol + "://" + proxy}
 
         if proxy is None:
             proxy = ""
@@ -164,5 +164,5 @@ class Settings(ABC):
 
 
 if __name__ == "__main__":
-    print(Settings.get_proxy("auto"))
     print(Settings.get_user_agent(None))
+    print(Settings.get_proxy("auto"))

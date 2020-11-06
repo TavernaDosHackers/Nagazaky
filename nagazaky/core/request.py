@@ -39,9 +39,5 @@ class Request(Settings):
 
     def get(self, url: str) -> Response:
         """ Method that makes a request and returns the scope of HTML """
-        request = get(url, headers=self.user_agent, proxies=self.proxy)
+        request = get(url, headers=self.user_agent, proxies=self.proxy, allow_redirects=False)
         return request
-
-
-if __name__ == "__main__":
-    pass
