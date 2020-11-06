@@ -40,6 +40,7 @@ try:
     # Discovery
     from nagazaky.discovery.checkcms import CheckCMS
     from nagazaky.discovery.searchdns import SearchDNS
+    from nagazaky.discovery.wordpress.scan import Scan
 except (ValueError, ImportError) as e:
     Color.exception("Import Error", e)
 except Exception as e:
@@ -86,8 +87,12 @@ class Nagazaky:
         # Format target URL.
         self.args.url = Settings.target(self.args.url)
         # Prints the Target URL and IP.
-        target_ip = self.args.url + " [{P}" + str(socket.gethostbyname(Settings.target_simple(self.args.url))) + "{W}]"
-        Color.println("\n{+} %s" % target_ip)
+        try:
+            target_ip = self.args.url + " [{P}" + str(
+                socket.gethostbyname(Settings.target_simple(self.args.url))) + "{W}]"
+            Color.println("\n{+} %s" % target_ip)
+        except:
+            Color.println("\n{+} %s" % self.args.url)
 
         # Prints the selected proxy on the screen.
         if self.args.proxy != "":
@@ -98,40 +103,41 @@ class Nagazaky:
         # Prints the selected User-Agent on the screen.
         for key, value in self.args.user_agent.items():
             key_value = str(value)
-            Color.println("{+} User-Agent: %s\n" % key_value)
+            Color.println("{+} User-Agent: %s" % key_value)
 
         # Start Scan!
-        print("Interesting Finding(s):\n")
+        print("\nInteresting Finding(s):\n")
 
         # Discovery.
-        Color.println("{+} Discovery:")
-
-        # Configure CheckCMS
-        check_cms = CheckCMS(self.args.url, self.request)
-
-        # Configure SearchDNS.
-        search_dns = SearchDNS(self.args.url, self.request)
+        Color.println("{+} {P}Discovery:{W}")
 
         # Check robots.txt.
         robots_txt = self.request.get(self.args.url + "robots.txt").text
         if "User-agent: *" in robots_txt or "User-Agent: *" in robots_txt:
-            Color.println(" ├─{+} Robots.txt: %s" % self.args.url + "robots.txt")
+            Color.println(" ├─{+} {G}Robots.txt:{W}")
+            Color.println(" │  ├ %s" % self.args.url + "robots.txt")
 
         # Check CMS.
-        Color.println(" ├─{+} CMS:")
+        # Configure CheckCMS
+        check_cms = CheckCMS(self.args.url, self.request)
+        Color.println(" ├─{+} {G}CMS:{W}")
+        list_cms = check_cms.run()
 
-        check_cms_wordpress = check_cms.wordpress()
-        check_cms_joomla = check_cms.joomla()
-        check_cms_drupal = check_cms.drupal()
+        # Finally discovery.
+        Color.println(" └──┘")
 
-        if check_cms_wordpress:
-            Color.println(" │  ├ WordPress: {G}running{W} (/wp-content/)")
-        elif check_cms_joomla:
-            Color.println(" │  ├ Joomla: {G}running{W} (/com_content/)")
-        elif check_cms_drupal:
-            Color.println(" │  ├ Drupal: {G}running{W} (/sites/default/files/)")
-        else:
-            Color.println(" │  │ 'No valid CMS was found.'")
+        if "wordpress" in list_cms:
+            Color.println("\n{+} {P}WordPress:{W}")
+            wordpress_scan = Scan(self.args.url, self.request)
+            wordpress_scan.directories_listing()
+            version_readme = wordpress_scan.readme_html()
+
+            # Finally WordPress.
+            Color.println(" └──┘")
+        elif "joomla" in list_cms:
+            pass
+        elif "drupal" in list_cms:
+            pass
 
 
 def entry_point() -> None:
@@ -140,8 +146,8 @@ def entry_point() -> None:
         nagazaky.run()
     except KeyboardInterrupt as ex:
         Color.exception("KeyboardInterrupt", ex)
-    # except Exception as ex:
-    #     Color.exception("Error", ex)
+    except Exception as ex:
+        Color.exception("Error", ex)
 
 
 if __name__ == "__main__":

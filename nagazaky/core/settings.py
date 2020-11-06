@@ -32,6 +32,8 @@ import random
 from abc import ABC
 from requests import get
 
+from nagazaky.core.color import Color
+
 
 class Settings(ABC):
     def __init__(self):
@@ -104,9 +106,11 @@ class Settings(ABC):
 
         # Make a request in the proxy API and format accordingly.
         if proxy == "auto":
+            Color.println("\n{!} BETA - The automatic proxy function may cause Nagazaky not to work as expected.")
+
             while True:
-                request_api_proxy = get("https://www.proxyscan.io/api/proxy?format=json&level=elite,"
-                                        "anonymous&type=https,http&ping=100").json()
+                api_proxy = "https://www.proxyscan.io/api/proxy?format=json&&type=https,http&ping=25"
+                request_api_proxy = get(api_proxy).json()
                 status_proxy = request_api_proxy[0]["Location"]["status"]
 
                 if status_proxy != "error" and status_proxy != "fail" and status_proxy != "None":

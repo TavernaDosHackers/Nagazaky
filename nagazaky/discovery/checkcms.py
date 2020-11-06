@@ -25,6 +25,7 @@ SOFTWARE.
 """
 
 from nagazaky.core.settings import Settings
+from nagazaky.core.color import Color
 from nagazaky.core.request import Request
 
 
@@ -34,17 +35,28 @@ class CheckCMS(Settings):
         super().__init__()
         self.url = url
         self.request = request
+        self.home_request = self.request.get(self.url)
 
-        self.su_request = self.request.get(self.url)
+    def run(self) -> list:
+        cms = []
 
-    def wordpress(self) -> bool:
-        if "wp-content" in self.su_request.text:
-            return True
+        # WordPress
+        if "wp-" in self.home_request.text:
+            Color.println(" │  ├ WordPress: {P}running{W}")
+            cms.append("wordpress")
 
-    def joomla(self) -> bool:
-        if "com_content" in self.su_request.text:
-            return True
+        # Joomla
+        elif "com_content" in self.home_request.text:
+            Color.println(" │  ├ Joomla: {P}running{W}")
+            cms.append("joomla")
 
-    def drupal(self) -> bool:
-        if "/sites/default/files/" in self.su_request.text:
-            return True
+        # Drupal
+        elif "/sites/default/files/" in self.home_request.text:
+            Color.println(" │  ├ Drupal: {P}running{W}")
+            cms.append("drupal")
+
+        else:
+            Color.println(" │  │ 'No valid CMS was found.'")
+
+        # Returns a list of the CMS found.
+        return cms
